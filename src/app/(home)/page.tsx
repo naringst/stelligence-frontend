@@ -36,7 +36,13 @@ const Home = () => {
     queryFn: () => {
       return getSearchResult(debouncedQuery);
     },
-    enabled: !!debouncedQuery && debouncedQuery.length > 0, // 조건부 쿼리 실행
+    enabled: !!debouncedQuery && debouncedQuery.length > 0,
+  });
+
+  const { data, isError, isLoading } = useQuery<Graph>({
+    queryKey: ['graphData'],
+    queryFn: getGraphData,
+    staleTime: 1000 * 60 * 3,
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,11 +65,6 @@ const Home = () => {
       handleSearch();
     }
   };
-
-  const { data, isError, isLoading } = useQuery<Graph>({
-    queryKey: ['graphData'],
-    queryFn: getGraphData,
-  });
 
   // FIXME 임시 설정
   if (isLoading) return <LoadingComponent />;
