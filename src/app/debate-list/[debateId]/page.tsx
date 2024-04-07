@@ -40,7 +40,7 @@ const Page = () => {
       return getDebateData(debateId);
     },
     enabled: !!debateId,
-    staleTime: 10000000,
+    staleTime: 1000 * 60 * 1,
   });
 
   const { data: comments } = useQuery<
